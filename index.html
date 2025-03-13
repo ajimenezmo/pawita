@@ -9,6 +9,7 @@
             text-align: center;
             background-color: #ffccff;
             font-family: Arial, sans-serif;
+            overflow: hidden;
         }
         h1 {
             font-size: 50px;
@@ -30,17 +31,34 @@
             cursor: pointer;
             border-radius: 5px;
         }
+        .animated-text {
+            position: absolute;
+            width: 100%;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 5px black;
+            animation: moveText 6s linear infinite alternate;
+        }
+        @keyframes moveText {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(100%); }
+        }
     </style>
 </head>
 <body>
     <h1>¡Tú puedes, Leona! 🦁 <3 </h1>
     <img src="kirby.gif" alt="Kirby animado">
-    <br>
+    
     <button onclick="playMusic()">🎵 Reproducir música</button>
     <audio id="music" loop>
         <source src="kirby1.mp3" type="audio/mpeg">
         Tu navegador no soporta la reproducción de audio.
     </audio>
+
+    <div class="animated-text" style="top: 20%;">Te quiero mucho pawita 💖</div>
+    <div class="animated-text" style="top: 40%;">Te admiro por quien eres ✨</div>
+    <div class="animated-text" style="top: 60%;">Eres super inteligente 🧠🔥</div>
 
     <script>
         function playMusic() {
