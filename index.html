@@ -39,6 +39,7 @@
             color: white;
             text-shadow: 2px 2px 5px black;
             animation: moveText 6s linear infinite alternate;
+            display: none; /* Ocultar al inicio */
         }
         @keyframes moveText {
             from { transform: translateX(-100%); }
@@ -50,20 +51,49 @@
     <h1>¡Tú puedes, Leona! 🦁 <3 </h1>
     <img src="kirby.gif" alt="Kirby animado">
     
-    <button onclick="playMusic()">🎵 Reproducir música</button>
+    <button onclick="startExperience()">🎵 Reproducir música</button>
     <audio id="music" loop>
         <source src="kirby1.mp3" type="audio/mpeg">
         Tu navegador no soporta la reproducción de audio.
     </audio>
 
-    <div class="animated-text" style="top: 20%;">Te quiero mucho pawita 💖</div>
-    <div class="animated-text" style="top: 40%;">Te admiro por quien eres ✨</div>
-    <div class="animated-text" style="top: 60%;">Eres super inteligente 🧠🔥</div>
+    <!-- Mensajes (ocultos al inicio) -->
+    <div class="animated-text" id="msg1" style="top: 20%;"></div>
+    <div class="animated-text" id="msg2" style="top: 40%;"></div>
+    <div class="animated-text" id="msg3" style="top: 60%;"></div>
 
     <script>
-        function playMusic() {
+        // Lista de mensajes
+        const mensajes = [
+            "Te quiero mucho pawita 💖",
+            "Te admiro por quien eres ✨",
+            "Eres super inteligente 🧠🔥",
+            "Eres taaaaan bonitaaa 💕",
+            "Bailaaas muyyyy bieen 💃",
+            "Yo creo en ti 🌟"
+        ];
+
+        function getRandomMessages() {
+            let shuffled = mensajes.sort(() => 0.5 - Math.random()); // Mezclar array
+            return shuffled.slice(0, 3); // Seleccionar 3 al azar
+        }
+
+        function startExperience() {
             var audio = document.getElementById('music');
             audio.play().catch(error => console.log("Reproducción bloqueada:", error));
+
+            // Obtener tres mensajes aleatorios
+            let selectedMessages = getRandomMessages();
+
+            // Insertar mensajes en el HTML
+            document.getElementById('msg1').textContent = selectedMessages[0];
+            document.getElementById('msg2').textContent = selectedMessages[1];
+            document.getElementById('msg3').textContent = selectedMessages[2];
+
+            // Mostrar los mensajes
+            document.getElementById('msg1').style.display = "block";
+            document.getElementById('msg2').style.display = "block";
+            document.getElementById('msg3').style.display = "block";
         }
     </script>
 </body>
