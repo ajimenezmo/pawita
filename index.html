@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¡Tú puedes, Leona!</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1"></script>
     <style>
         body {
             text-align: center;
@@ -71,7 +72,7 @@
             "Bailaaas muyyyy bieen 💃",
             "Yo creo en ti 🌟",
             "Eres un ser de luuuz ✨",
-            "No sé cuál es más hermosa, ¿tú o tu alma? 💫",
+            "Eres un alma hermosa 💫",
             "Te amo tantooo ❤️"
         ];
 
@@ -93,13 +94,21 @@
                 element.textContent = newMessage;
                 element.style.display = "block";
 
-                // Evento para cambiar el mensaje cuando la animación termine
                 element.addEventListener("animationiteration", function () {
                     let nextMessage = getRandomMessage(activeMessages);
                     activeMessages[index] = nextMessage;
                     element.textContent = nextMessage;
                 });
             });
+
+            // Iniciar confetti indefinido
+            setInterval(() => {
+                confetti({
+                    particleCount: 5,
+                    spread: 160,
+                    origin: { y: 0.6 }
+                });
+            }, 500);
         }
     </script>
 </body>
