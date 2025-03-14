@@ -73,7 +73,10 @@
             "Yo creo en ti 🌟",
             "Eres un ser de luuuz ✨",
             "Eres un alma hermosa 💫",
-            "Te amo tantooo ❤️"
+            "Te amo tantooo ❤️",
+            "Estoy TAAAAN orgulloso de ti 🦁💪",
+            "A las leonas les dicen fuerza, Paula! 🦁🔥",
+            "You are so stunningg 💖✨"
         ];
 
         function getRandomMessage(currentMessages) {
@@ -101,14 +104,19 @@
                 });
             });
 
-            // Iniciar confetti indefinido
+            // Más confetti con mayor frecuencia
             setInterval(() => {
                 confetti({
-                    particleCount: 5,
-                    spread: 160,
+                    particleCount: 10, // Más partículas
+                    spread: 180, // Más amplitud
                     origin: { y: 0.6 }
                 });
-            }, 500);
+                confetti({
+                    particleCount: 10, // Otro grupo de partículas
+                    spread: 160,
+                    origin: { x: Math.random(), y: 0.5 }
+                });
+            }, 300); // Más frecuente (cada 0.3 segundos)
         }
     </script>
 </body>
