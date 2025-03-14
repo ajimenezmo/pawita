@@ -38,7 +38,7 @@
             font-weight: bold;
             color: white;
             text-shadow: 2px 2px 5px black;
-            display: none; /* Ocultar al inicio */
+            display: none;
             animation: moveText 6s linear infinite;
         }
         @keyframes moveText {
@@ -69,29 +69,35 @@
             "Eres super inteligente 🧠🔥",
             "Eres taaaaan bonitaaa 💕",
             "Bailaaas muyyyy bieen 💃",
-            "Yo creo en ti 🌟"
+            "Yo creo en ti 🌟",
+            "Eres un ser de luuuz ✨",
+            "No sé cuál es más hermosa, ¿tú o tu alma? 💫",
+            "Te amo tantooo ❤️"
         ];
 
-        function getRandomMessage(exclude = []) {
-            let availableMessages = mensajes.filter(msg => !exclude.includes(msg));
-            return availableMessages[Math.floor(Math.random() * availableMessages.length)];
+        function getRandomMessage(currentMessages) {
+            let newMessage;
+            do {
+                newMessage = mensajes[Math.floor(Math.random() * mensajes.length)];
+            } while (currentMessages.includes(newMessage));
+            return newMessage;
         }
 
         function startExperience() {
             document.getElementById('music').play().catch(error => console.log("Reproducción bloqueada:", error));
 
-            let usedMessages = [];
+            let activeMessages = [];
             document.querySelectorAll(".animated-text").forEach((element, index) => {
-                let newMessage = getRandomMessage(usedMessages);
-                usedMessages.push(newMessage);
+                let newMessage = getRandomMessage(activeMessages);
+                activeMessages.push(newMessage);
                 element.textContent = newMessage;
                 element.style.display = "block";
 
-                // Cuando termine la animación, cambiar el mensaje
+                // Evento para cambiar el mensaje cuando la animación termine
                 element.addEventListener("animationiteration", function () {
-                    let newText = getRandomMessage(usedMessages);
-                    usedMessages.push(newText);
-                    element.textContent = newText;
+                    let nextMessage = getRandomMessage(activeMessages);
+                    activeMessages[index] = nextMessage;
+                    element.textContent = nextMessage;
                 });
             });
         }
