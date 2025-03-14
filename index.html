@@ -79,7 +79,10 @@
             "You are so stunningg 💖✨",
             "Eres mi artista favoritaa 🎨💖",
             "Eres muyyy craaack 💥🔥",
-            "Eres muyyy fuerte 🦾🦁"
+            "Eres muyyy fuerte 🦾🦁",
+            "Tqm solecitooo ☀️💛",
+            "Me importaaas muchooo 💖",
+            "Cuidateeee 🌿✨"
         ];
 
         function getRandomMessage(currentMessages) {
@@ -94,15 +97,15 @@
             // Reproducir la música
             document.getElementById('music').play().catch(error => console.log("Reproducción bloqueada:", error));
 
-            // Explosión inicial de confetti
-            for (let i = 0; i < 5; i++) { // Aumentamos la cantidad
+            // Explosión inicial de confetti (más fuerte)
+            for (let i = 0; i < 10; i++) { // Aumentamos la cantidad
                 setTimeout(() => {
                     confetti({
-                        particleCount: 100,
+                        particleCount: 200,
                         spread: 360,
                         origin: { x: Math.random(), y: Math.random() }
                     });
-                }, i * 300); // Pequeños intervalos para dar sensación de gran explosión
+                }, i * 150); // Intervalos más rápidos
             }
 
             // Iniciar los mensajes animados
@@ -120,14 +123,14 @@
                 });
             });
 
-            // Confetti constante cada 0.2 segundos
+            // Confetti constante cada 0.1 segundos
             setInterval(() => {
                 confetti({
-                    particleCount: 10,
+                    particleCount: 15,
                     spread: 180,
                     origin: { x: Math.random(), y: Math.random() }
                 });
-            }, 200);
+            }, 100);
         }
     </script>
 </body>
