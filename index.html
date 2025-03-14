@@ -76,7 +76,10 @@
             "Te amo tantooo ❤️",
             "Estoy TAAAAN orgulloso de ti 🦁💪",
             "A las leonas les dicen fuerza, Paula! 🦁🔥",
-            "You are so stunningg 💖✨"
+            "You are so stunningg 💖✨",
+            "Eres mi artista favoritaa 🎨💖",
+            "Eres muyyy craaack 💥🔥",
+            "Eres muyyy fuerte 🦾🦁"
         ];
 
         function getRandomMessage(currentMessages) {
@@ -88,8 +91,21 @@
         }
 
         function startExperience() {
+            // Reproducir la música
             document.getElementById('music').play().catch(error => console.log("Reproducción bloqueada:", error));
 
+            // Explosión inicial de confetti
+            for (let i = 0; i < 5; i++) { // Aumentamos la cantidad
+                setTimeout(() => {
+                    confetti({
+                        particleCount: 100,
+                        spread: 360,
+                        origin: { x: Math.random(), y: Math.random() }
+                    });
+                }, i * 300); // Pequeños intervalos para dar sensación de gran explosión
+            }
+
+            // Iniciar los mensajes animados
             let activeMessages = [];
             document.querySelectorAll(".animated-text").forEach((element, index) => {
                 let newMessage = getRandomMessage(activeMessages);
@@ -104,19 +120,14 @@
                 });
             });
 
-            // Más confetti con mayor frecuencia
+            // Confetti constante cada 0.2 segundos
             setInterval(() => {
                 confetti({
-                    particleCount: 10, // Más partículas
-                    spread: 180, // Más amplitud
-                    origin: { y: 0.6 }
+                    particleCount: 10,
+                    spread: 180,
+                    origin: { x: Math.random(), y: Math.random() }
                 });
-                confetti({
-                    particleCount: 10, // Otro grupo de partículas
-                    spread: 160,
-                    origin: { x: Math.random(), y: 0.5 }
-                });
-            }, 300); // Más frecuente (cada 0.3 segundos)
+            }, 200);
         }
     </script>
 </body>
