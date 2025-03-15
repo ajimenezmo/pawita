@@ -10,7 +10,8 @@
             text-align: center;
             background-color: #ffccff;
             font-family: Arial, sans-serif;
-            overflow: hidden;
+            overflow: hidden; /* Bloquea el scroll al inicio */
+            height: 100vh;
         }
         h1 {
             font-size: 50px;
@@ -54,6 +55,7 @@
 
         #messages-container {
             margin-top: 20px;
+            display: none; /* Ocultar hasta que se desplieguen las frases */
         }
 
         .message {
@@ -98,10 +100,8 @@
         Tu navegador no soporta la reproducción de audio.
     </audio>
 
-    <div id="messages-container"></div>
-
-    <!-- Contenedor de frases animadas -->
     <div id="animated-messages"></div>
+    <div id="messages-container"></div>
 
     <script>
         const mensajes = [
@@ -137,36 +137,28 @@
         let animatedInterval;
 
         function startExperience() {
-            // Reproducir la música
             document.getElementById('music').play().catch(error => console.log("Reproducción bloqueada:", error));
 
-            // Abrir los telones
             document.getElementById('left-curtain').style.transform = "translateX(-100%)";
             document.getElementById('right-curtain').style.transform = "translateX(100%)";
-
-            // Desaparecer el botón de música
             document.getElementById('play-button').style.display = "none";
 
-            // Explosión inicial de confetti
             for (let i = 0; i < 15; i++) { 
                 setTimeout(() => {
                     confetti({ particleCount: 400, spread: 360, origin: { x: Math.random(), y: Math.random() } });
                 }, i * 100);
             }
 
-            // Confetti constante cada 0.01 segundos
             setInterval(() => {
                 confetti({ particleCount: 10, spread: 180, origin: { x: Math.random(), y: Math.random() } });
             }, 10);
 
-            // Mostrar botón "Presióname" después de 3 segundos
             setTimeout(() => {
                 let pressButton = document.getElementById('press-button');
                 pressButton.style.display = "block";
                 setTimeout(() => { pressButton.style.opacity = "1"; }, 200);
             }, 3000);
 
-            // Iniciar frases animadas más rápido (cada 1 segundo)
             animatedInterval = setInterval(showRandomAnimatedMessages, 1000);
         }
 
@@ -178,25 +170,24 @@
             div.classList.add("animated-text");
             div.textContent = msg;
 
-            // Ubicación aleatoria en la pantalla
-            div.style.top = `${Math.random() * 80 + 10}%`; // Altura entre 10% y 90%
-            div.style.left = "-100%"; // Empieza fuera de la pantalla
+            div.style.top = `${Math.random() * 80 + 10}%`;
+            div.style.left = "-100%";
 
             container.appendChild(div);
 
-            // Remover el mensaje después de que termine su animación
             setTimeout(() => {
                 div.remove();
             }, 5000);
         }
 
         function showAllMessages() {
-            // Detener frases animadas
             clearInterval(animatedInterval);
             document.getElementById('animated-messages').innerHTML = "";
 
             let container = document.getElementById('messages-container');
             container.innerHTML = ""; 
+            container.style.display = "block"; 
+
             let shuffledMessages = mensajes.sort(() => Math.random() - 0.5);
 
             shuffledMessages.forEach((msg, index) => {
@@ -206,10 +197,13 @@
                     div.textContent = msg;
                     container.appendChild(div);
                     setTimeout(() => { div.style.opacity = "1"; }, 100);
-                }, index * 300); // Ahora aparecen más rápido (cada 0.3s)
+                }, index * 300);
             });
 
             document.getElementById('press-button').disabled = true;
+
+            // Activar scroll para ver todas las frases
+            document.body.style.overflowY = "auto";
         }
     </script>
 </body>
