@@ -10,7 +10,7 @@
             text-align: center;
             background-color: #ffccff;
             font-family: Arial, sans-serif;
-            overflow-x: hidden;
+            overflow: hidden;
         }
         h1 {
             font-size: 50px;
@@ -69,17 +69,17 @@
         /* Frases animadas */
         .animated-text {
             position: absolute;
-            width: 100%;
+            white-space: nowrap;
             font-size: 24px;
             font-weight: bold;
             color: white;
             text-shadow: 2px 2px 5px black;
-            animation: moveText 6s linear infinite;
+            animation: moveText 5s linear infinite;
         }
         
         @keyframes moveText {
-            from { transform: translateX(-100%); }
-            to { transform: translateX(100%); }
+            from { left: -100%; }
+            to { left: 100%; }
         }
     </style>
 </head>
@@ -166,29 +166,28 @@
                 setTimeout(() => { pressButton.style.opacity = "1"; }, 200);
             }, 3000);
 
-            // Iniciar frases animadas
-            animatedInterval = setInterval(showRandomAnimatedMessages, 3000);
+            // Iniciar frases animadas más rápido (cada 1 segundo)
+            animatedInterval = setInterval(showRandomAnimatedMessages, 1000);
         }
 
         function showRandomAnimatedMessages() {
             let container = document.getElementById('animated-messages');
-            container.innerHTML = "";
+            let msg = mensajes[Math.floor(Math.random() * mensajes.length)];
 
-            let selectedMessages = [];
-            while (selectedMessages.length < 3) {
-                let randomMsg = mensajes[Math.floor(Math.random() * mensajes.length)];
-                if (!selectedMessages.includes(randomMsg)) {
-                    selectedMessages.push(randomMsg);
-                }
-            }
+            let div = document.createElement("div");
+            div.classList.add("animated-text");
+            div.textContent = msg;
 
-            selectedMessages.forEach((msg, index) => {
-                let div = document.createElement("div");
-                div.classList.add("animated-text");
-                div.style.top = `${30 + index * 10}%`; 
-                div.textContent = msg;
-                container.appendChild(div);
-            });
+            // Ubicación aleatoria en la pantalla
+            div.style.top = `${Math.random() * 80 + 10}%`; // Altura entre 10% y 90%
+            div.style.left = "-100%"; // Empieza fuera de la pantalla
+
+            container.appendChild(div);
+
+            // Remover el mensaje después de que termine su animación
+            setTimeout(() => {
+                div.remove();
+            }, 5000);
         }
 
         function showAllMessages() {
@@ -207,7 +206,7 @@
                     div.textContent = msg;
                     container.appendChild(div);
                     setTimeout(() => { div.style.opacity = "1"; }, 100);
-                }, index * 500);
+                }, index * 300); // Ahora aparecen más rápido (cada 0.3s)
             });
 
             document.getElementById('press-button').disabled = true;
