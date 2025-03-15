@@ -131,4 +131,39 @@
 
             // Explosión inicial de confetti (ahora más grande)
             for (let i = 0; i < 15; i++) { // Más explosiones
-                setTimeout(() =>
+                setTimeout(() => {
+                    confetti({
+                        particleCount: 400, // Aumenté las partículas
+                        spread: 360,
+                        origin: { x: Math.random(), y: Math.random() }
+                    });
+                }, i * 100);
+            }
+
+            // Iniciar los mensajes animados
+            let activeMessages = [];
+            document.querySelectorAll(".animated-text").forEach((element, index) => {
+                let newMessage = getRandomMessage(activeMessages);
+                activeMessages.push(newMessage);
+                element.textContent = newMessage;
+                element.style.display = "block";
+
+                element.addEventListener("animationiteration", function () {
+                    let nextMessage = getRandomMessage(activeMessages);
+                    activeMessages[index] = nextMessage;
+                    element.textContent = nextMessage;
+                });
+            });
+
+            // Confetti constante cada 0.01 segundos
+            setInterval(() => {
+                confetti({
+                    particleCount: 10,
+                    spread: 180,
+                    origin: { x: Math.random(), y: Math.random() }
+                });
+            }, 10);
+        }
+    </script>
+</body>
+</html>
