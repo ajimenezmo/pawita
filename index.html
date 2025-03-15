@@ -32,7 +32,7 @@
         }
         #left-curtain { left: 0; }
         #right-curtain { right: 0; }
-        
+
         .button {
             margin-top: 20px;
             padding: 10px 20px;
@@ -65,6 +65,22 @@
             opacity: 0;
             transition: opacity 1s;
         }
+
+        /* Frases animadas */
+        .animated-text {
+            position: absolute;
+            width: 100%;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 5px black;
+            animation: moveText 6s linear infinite;
+        }
+        
+        @keyframes moveText {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(100%); }
+        }
     </style>
 </head>
 <body>
@@ -83,6 +99,9 @@
     </audio>
 
     <div id="messages-container"></div>
+
+    <!-- Contenedor de frases animadas -->
+    <div id="animated-messages"></div>
 
     <script>
         const mensajes = [
@@ -115,6 +134,8 @@
             "Gracias por estar en mi vidaaa 🌟"
         ];
 
+        let animatedInterval;
+
         function startExperience() {
             // Reproducir la música
             document.getElementById('music').play().catch(error => console.log("Reproducción bloqueada:", error));
@@ -144,12 +165,40 @@
                 pressButton.style.display = "block";
                 setTimeout(() => { pressButton.style.opacity = "1"; }, 200);
             }, 3000);
+
+            // Iniciar frases animadas
+            animatedInterval = setInterval(showRandomAnimatedMessages, 3000);
+        }
+
+        function showRandomAnimatedMessages() {
+            let container = document.getElementById('animated-messages');
+            container.innerHTML = "";
+
+            let selectedMessages = [];
+            while (selectedMessages.length < 3) {
+                let randomMsg = mensajes[Math.floor(Math.random() * mensajes.length)];
+                if (!selectedMessages.includes(randomMsg)) {
+                    selectedMessages.push(randomMsg);
+                }
+            }
+
+            selectedMessages.forEach((msg, index) => {
+                let div = document.createElement("div");
+                div.classList.add("animated-text");
+                div.style.top = `${30 + index * 10}%`; 
+                div.textContent = msg;
+                container.appendChild(div);
+            });
         }
 
         function showAllMessages() {
+            // Detener frases animadas
+            clearInterval(animatedInterval);
+            document.getElementById('animated-messages').innerHTML = "";
+
             let container = document.getElementById('messages-container');
-            container.innerHTML = ""; // Limpiar antes de agregar mensajes
-            let shuffledMessages = mensajes.sort(() => Math.random() - 0.5); // Mezclar mensajes aleatoriamente
+            container.innerHTML = ""; 
+            let shuffledMessages = mensajes.sort(() => Math.random() - 0.5);
 
             shuffledMessages.forEach((msg, index) => {
                 setTimeout(() => {
@@ -158,10 +207,9 @@
                     div.textContent = msg;
                     container.appendChild(div);
                     setTimeout(() => { div.style.opacity = "1"; }, 100);
-                }, index * 500); // Cada mensaje aparece con un pequeño retraso
+                }, index * 500);
             });
 
-            // Desactivar el botón después de presionarlo una vez
             document.getElementById('press-button').disabled = true;
         }
     </script>
