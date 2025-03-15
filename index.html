@@ -35,25 +35,32 @@
         
         .button {
             margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 20px;
+            padding: 15px 30px;
+            font-size: 25px;
             color: white;
-            background-color: #ff4081;
+            background-color: #ff0080;
             border: none;
             cursor: pointer;
-            border-radius: 5px;
-            position: relative;
-            z-index: 2;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ff0080;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .button:hover {
+            transform: scale(1.1);
+            background-color: #e60073;
         }
 
         #press-button {
             display: none;
             opacity: 0;
-            transition: opacity 2s;
+            position: relative;
+            top: 50px;
+            transition: opacity 2s, top 1s;
         }
 
         #messages-container {
-            margin-top: 20px;
+            margin-top: 50px;
         }
 
         .message {
@@ -63,7 +70,28 @@
             text-shadow: 2px 2px 5px black;
             margin: 10px;
             opacity: 0;
-            transition: opacity 1s;
+            position: relative;
+            animation: floatMessage 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatMessage {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+
+        .animated-text {
+            position: absolute;
+            width: 100%;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 5px black;
+            animation: moveText 6s linear infinite alternate;
+        }
+
+        @keyframes moveText {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(100%); }
         }
     </style>
 </head>
@@ -75,13 +103,14 @@
     <img src="kirby.gif" alt="Kirby animado">
     
     <button id="play-button" class="button" onclick="startExperience()">🎵 Reproducir música</button>
-    <button id="press-button" class="button" onclick="showAllMessages()">Presióname</button>
+    <button id="press-button" class="button" onclick="showAllMessages()">🌟 PRESIÓNAME 🌟</button>
 
     <audio id="music" loop>
         <source src="kirby1.mp3" type="audio/mpeg">
         Tu navegador no soporta la reproducción de audio.
     </audio>
 
+    <div id="animated-messages"></div>
     <div id="messages-container"></div>
 
     <script>
@@ -116,40 +145,71 @@
         ];
 
         function startExperience() {
-            // Reproducir la música
             document.getElementById('music').play().catch(error => console.log("Reproducción bloqueada:", error));
 
-            // Abrir los telones
             document.getElementById('left-curtain').style.transform = "translateX(-100%)";
             document.getElementById('right-curtain').style.transform = "translateX(100%)";
 
-            // Desaparecer el botón de música
             document.getElementById('play-button').style.display = "none";
 
-            // Explosión inicial de confetti
             for (let i = 0; i < 15; i++) { 
                 setTimeout(() => {
                     confetti({ particleCount: 400, spread: 360, origin: { x: Math.random(), y: Math.random() } });
                 }, i * 100);
             }
 
-            // Confetti constante cada 0.01 segundos
             setInterval(() => {
                 confetti({ particleCount: 10, spread: 180, origin: { x: Math.random(), y: Math.random() } });
             }, 10);
 
-            // Mostrar botón "Presióname" después de 3 segundos
             setTimeout(() => {
                 let pressButton = document.getElementById('press-button');
                 pressButton.style.display = "block";
-                setTimeout(() => { pressButton.style.opacity = "1"; }, 200);
+                setTimeout(() => { 
+                    pressButton.style.opacity = "1";
+                    pressButton.style.top = "20px";
+                }, 200);
             }, 3000);
+
+            generateAnimatedMessages();
+        }
+
+        function generateAnimatedMessages() {
+            let animatedContainer = document.getElementById('animated-messages');
+            animatedContainer.innerHTML = "";
+            let activeMessages = new Set();
+
+            function createMessage() {
+                if (activeMessages.size >= 3) return;
+                let randomMsg = mensajes[Math.floor(Math.random() * mensajes.length)];
+
+                if (activeMessages.has(randomMsg)) return;
+                activeMessages.add(randomMsg);
+
+                let div = document.createElement("div");
+                div.classList.add("animated-text");
+                div.textContent = randomMsg;
+                div.style.top = `${Math.random() * 60 + 20}%`;
+                animatedContainer.appendChild(div);
+
+                setTimeout(() => {
+                    animatedContainer.removeChild(div);
+                    activeMessages.delete(randomMsg);
+                    createMessage();
+                }, 6000);
+            }
+
+            setInterval(createMessage, 2000);
+            createMessage();
         }
 
         function showAllMessages() {
+            document.getElementById('animated-messages').innerHTML = "";
+
             let container = document.getElementById('messages-container');
-            container.innerHTML = ""; // Limpiar antes de agregar mensajes
-            let shuffledMessages = mensajes.sort(() => Math.random() - 0.5); // Mezclar mensajes aleatoriamente
+            container.innerHTML = "";
+
+            let shuffledMessages = mensajes.sort(() => Math.random() - 0.5);
 
             shuffledMessages.forEach((msg, index) => {
                 setTimeout(() => {
@@ -158,10 +218,9 @@
                     div.textContent = msg;
                     container.appendChild(div);
                     setTimeout(() => { div.style.opacity = "1"; }, 100);
-                }, index * 500); // Cada mensaje aparece con un pequeño retraso
+                }, index * 500);
             });
 
-            // Desactivar el botón después de presionarlo una vez
             document.getElementById('press-button').disabled = true;
         }
     </script>
