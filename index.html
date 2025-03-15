@@ -21,6 +21,7 @@
             width: 300px;
             height: auto;
             margin-top: 20px;
+            display: none; /* El GIF estará oculto hasta presionar el botón */
         }
         button {
             margin-top: 20px;
@@ -50,7 +51,7 @@
 </head>
 <body>
     <h1>¡Tú puedes, Leona! 🦁 <3 </h1>
-    <img src="kirby.gif" alt="Kirby animado">
+    <img id="kirbyGif" src="kirby.gif" alt="Kirby animado">
     
     <button onclick="startExperience()">🎵 Reproducir música</button>
     <audio id="music" loop>
@@ -82,7 +83,10 @@
             "Eres muyyy fuerte 🦾🦁",
             "Tqm solecitooo ☀️💛",
             "Me importaaas muchooo 💖",
-            "Cuidateeee 🌿✨"
+            "Cuidateeee 🌿✨",
+            "Eres muy interesantee 🤩",
+            "Me gusta escuchar yappear 🎶",
+            "Eres capaz de todoo 💪"
         ];
 
         function getRandomMessage(currentMessages) {
@@ -97,15 +101,18 @@
             // Reproducir la música
             document.getElementById('music').play().catch(error => console.log("Reproducción bloqueada:", error));
 
-            // Explosión inicial de confetti (más fuerte)
-            for (let i = 0; i < 10; i++) { // Aumentamos la cantidad
+            // Mostrar el GIF de Kirby
+            document.getElementById('kirbyGif').style.display = "inline";
+
+            // Explosión inicial de confetti (aún más grande)
+            for (let i = 0; i < 15; i++) { // Más explosiones
                 setTimeout(() => {
                     confetti({
-                        particleCount: 200,
+                        particleCount: 300, // Aumenté las partículas
                         spread: 360,
                         origin: { x: Math.random(), y: Math.random() }
                     });
-                }, i * 150); // Intervalos más rápidos
+                }, i * 100);
             }
 
             // Iniciar los mensajes animados
@@ -123,14 +130,14 @@
                 });
             });
 
-            // Confetti constante cada 0.1 segundos
+            // Confetti constante cada 0.05 segundos
             setInterval(() => {
                 confetti({
-                    particleCount: 15,
+                    particleCount: 10,
                     spread: 180,
                     origin: { x: Math.random(), y: Math.random() }
                 });
-            }, 100);
+            }, 50);
         }
     </script>
 </body>
