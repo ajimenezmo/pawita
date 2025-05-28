@@ -9,18 +9,18 @@
     <link rel="icon" type="image/x-icon" href="https://cdn.jsdelivr.net/gh/sun0225SUN/photos/img/20210715233345.png">
     <link rel="stylesheet" href="love.css">
 </head>
-<style>         .button {
-            margin-top: 200px;
-            padding: 10px 20px;
-            font-size: 20px;
-            color: white;
-            background-color: #ff4081;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            position: relative;
-            z-index: 2;
-        }</style>
+<style>
+  #play-music {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 1000;
+  }
+</style>
 
 <body>
 
@@ -29,6 +29,8 @@
         Tu navegador no soporta la reproducción de audio.
     </audio>
     
+    <button id="play-music" class="button"  onclick="document.getElementById('music').play()">🎵 Cancion que me recuerda a ti</button>
+
     <div class="container" onselectstart="return false;" unselectable="on" style="-moz-user-select:none;">
 
         <div class="body_left">
