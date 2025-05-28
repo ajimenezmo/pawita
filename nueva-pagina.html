@@ -8,9 +8,22 @@
     <meta name="description" content="Collecting this wasn't easy — your star is my motivation to keep going! Contributions are welcome too.">
     <link rel="stylesheet" href="love.css">
 </head>
-
+<style>         .button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 20px;
+            color: white;
+            background-color: #ff4081;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            position: relative;
+            z-index: 2;
+        }</style>
 
 <body>
+
+    <button id="press-button" class="button"  onclick="document.getElementById('music').play()">🎵 Cancion que me recuerda a ti</button>
 
     <audio id="music" loop>
         <source src="musica.mp3" type="audio/mpeg">
@@ -42,7 +55,6 @@
 
     <script src="love.js"></script>
     
-<button id="press-button" class="button"  onclick="document.getElementById('audios').play()">🎵 Cancion que me recuerda a ti</button>
     
 </body>
 
