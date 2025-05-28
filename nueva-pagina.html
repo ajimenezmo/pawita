@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="love.css">
 </head>
 <style>         .button {
-            margin-top: 20px;
+            margin-top: 200px;
             padding: 10px 20px;
             font-size: 20px;
             color: white;
@@ -29,20 +29,8 @@
         Tu navegador no soporta la reproducción de audio.
     </audio>
 
-<script>
-  function activarMusica() {
-    const music = document.getElementById("music");
-    music.play().catch((e) => {
-      console.log("No se pudo reproducir automáticamente:", e);
-    });
-    document.removeEventListener("click", activarMusica); // Solo una vez
-    document.removeEventListener("touchstart", activarMusica); // Para móviles
-  }
-
-  document.addEventListener("click", activarMusica);
-  document.addEventListener("touchstart", activarMusica); // Compatible con pantallas táctiles
-</script>
-
+    <button id="press-button" class="button"  onclick="document.getElementById('music').play()">🎵 Cancion que me recuerda a ti</button>
+    
     <div class="container" onselectstart="return false;" unselectable="on" style="-moz-user-select:none;">
 
         <div class="body_left">
