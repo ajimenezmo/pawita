@@ -12,12 +12,9 @@
 
 <body>
 
-    <audio autoplay="autoplay" loop="loop" id="audios" preload="auto">
-        <source src="musica.mp3" />
-    </audio>
-    
-        <audio id="music" loop="loop">
+    <audio id="music" loop>
         <source src="musica.mp3" type="audio/mpeg">
+        Tu navegador no soporta la reproducción de audio.
     </audio>
     
     <div class="container" onselectstart="return false;" unselectable="on" style="-moz-user-select:none;">
@@ -45,8 +42,8 @@
 
     <script src="love.js"></script>
     
-<button onclick="document.getElementById('audios').play()">🎵 Cancion que me recuerda a ti</button>
-<audio id="bg-music" src="musica.mp3"></audio>
+<button id="press-button" class="button"  onclick="document.getElementById('audios').play()">🎵 Cancion que me recuerda a ti</button>
+    
 </body>
 
 </html>
