@@ -53,6 +53,12 @@
             transition: opacity 2s;
         }
 
+        #press-button1 {
+            display: none;
+            opacity: 0;
+            transition: opacity 2s;
+        }
+        
         #messages-container {
             margin-top: 20px;
             display: none; /* Ocultar hasta que se desplieguen las frases */
@@ -94,7 +100,8 @@
     
     <button id="play-button" class="button" onclick="startExperience()">🎵 Reproducir música</button>
     <button id="press-button" class="button" onclick="showAllMessages()">Presióname</button>
-
+    <button id="press-button1" class="button" onclick="location.href='nueva-pagina.html'">Ir a nueva página</button>
+    
     <audio id="music" loop>
         <source src="kirby1.mp3" type="audio/mpeg">
         Tu navegador no soporta la reproducción de audio.
@@ -200,8 +207,13 @@
                 }, index * 300);
             });
 
-            document.getElementById('press-button').disabled = true;
-
+            document.getElementById('press-button').style.display = "none";
+            
+            setTimeout(() => {
+                let pressButton = document.getElementById('press-button1');
+                pressButton.style.display = "block";
+                setTimeout(() => { pressButton.style.opacity = "1"; }, 200);
+            }, 3000);
             // Activar scroll para ver todas las frases
             document.body.style.overflowY = "auto";
         }
